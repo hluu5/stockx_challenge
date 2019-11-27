@@ -19,4 +19,4 @@ docker images
 
 docker run -p 4000:4000 -d <your username>/<app name>
 ```
-Now you can go to your ipaddress at port 4000 to access your docker container
+Now you can go to your ip address at port 4000 to access your docker container. On older windows version, you might want to try going to ip address that was assigned to your VM
