@@ -13,9 +13,8 @@ Please run the following command:
 ```
 docker build -t <your username>/<app name> .
 
-<!---
-find your image
--->
+>find your image
+
 docker images
 
 docker run -p 4000:4000 -d <your username>/<app name>
