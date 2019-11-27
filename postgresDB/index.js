@@ -32,11 +32,13 @@ const pgQuery = (q, params, callback) => {
   const start = Date.now();
   return pool.query(q, params, (err, res) => {
     const duration = Date.now() - start
-    console.log('executed query', { q, duration, rows: res.rowCount })
     callback(err, res)
+    console.log('executed query', { q, duration: duration +`ms`, rows: res.rowCount, inserted: res.rows })
+
   })
 };
 
+//Utility function to debug last client blocking the pool
 const getClient = (callback) => {
   pool.connect((err, client, done) => {
     const query = client.query.bind(client)
@@ -66,19 +68,13 @@ const createNewEntries = (shoesName, shoesSize, trueToSizeCalculation)=> {
   const query = 'INSERT INTO stockx.shoes(shoesname, size_data, true_to_size_calculation) VALUES($1, $2, $3) RETURNING *'
   const values = [shoesName, shoesSize, trueToSizeCalculation]
   pgQuery(query,values, (err,res)=> {
-    // client.release();
-    if (err) console.error(err);
-    // console.log(res);
+    if (err) throw new Error(err);
   })
-  // client
-  // .query(query,values)
-  // .then(data =>console.log(data))
-  // .then(()=> client.release())
-  // .catch(err=>console.error(err))
 }
 
 module.exports = {
   pool,
   createNewEntries,
-  pgQuery
+  pgQuery,
+  getClient
 }

@@ -3,7 +3,7 @@ const pool = require('../postgresDB/index.js').pool;
 
 pool.connect()
 .then((client)=>{
-  createNewEntries('shoes34', {
+  createNewEntries('shoses34w32342', {
     "1": 30,
     "2": 20
   }, 3)
