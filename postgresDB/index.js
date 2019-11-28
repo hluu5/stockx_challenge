@@ -5,8 +5,10 @@ dotenv.config();
 const pool = new Pool({
   //your username for postgres here
   user: 'postgres',
-  //host should be ip address of the container or your VM
+  //host should be ip address of your postgres container, your cloud postgres db or your local postgres db
   host: 'localhost',
+  //Connect to PORT that is dedicated to your postgres db. Default is 5432.
+  port: 5432,
   //remember to create one if it's not already there. You can do this with pgAdmin. Login to your account
   //Click on PostgresSQL 10. Right Click on Databases and Create new one
   database: 'stockx',
@@ -64,16 +66,22 @@ const getClient = (callback) => {
   })
 }
 
-
-
-const createNewEntry = (shoesName, shoesSize, trueToSizeCalculation)=> {
-  const findExistingShoes = "SELECT shoesname FROM stockx.shoes WHERE shoesname = ($1)"
-  const query = 'INSERT INTO stockx.shoes(shoesname, size_data, true_to_size_calculation) VALUES($1, $2, $3) RETURNING *'
-  const values = [shoesName, shoesSize, trueToSizeCalculation]
+const retrieveShoesData = (shoesName, callback) => {
+  const findExistingShoes = "SELECT shoes_id, shoesname, size_data, true_to_size_calculation FROM stockx.shoes WHERE shoesname = ($1)"
   pgQuery(findExistingShoes,[shoesName], (err,res)=> {
     if (err) throw new Error(err);
-    if (res.rows.length > 0 ) throw new Error('This shoes entry already exists')
-    if (res.rows.length === 0) {
+    if (res) callback(res.rows);
+  })
+}
+
+const createNewEntry = (shoesName, shoesSize, trueToSizeCalculation)=> {
+  // const findExistingShoes = "SELECT shoesname FROM stockx.shoes WHERE shoesname = ($1)"
+  const query = 'INSERT INTO stockx.shoes(shoesname, size_data, true_to_size_calculation) VALUES($1, $2, $3) RETURNING *'
+  const values = [shoesName, shoesSize, trueToSizeCalculation]
+  //Check if entry already exists
+  retrieveShoesData(shoesName, (res)=> {
+    if (res.length > 0) throw new Error('This shoes entry already exists');
+    if (res.length === 0) {
       pgQuery(query,values, (err,res) => {
         if (err) throw new Error(err)
       })
@@ -84,6 +92,7 @@ const createNewEntry = (shoesName, shoesSize, trueToSizeCalculation)=> {
 module.exports = {
   pool,
   createNewEntry,
+  retrieveShoesData ,
   pgQuery,
   getClient
 }
