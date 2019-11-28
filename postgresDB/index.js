@@ -64,17 +64,26 @@ const getClient = (callback) => {
   })
 }
 
-const createNewEntries = (shoesName, shoesSize, trueToSizeCalculation)=> {
+
+
+const createNewEntry = (shoesName, shoesSize, trueToSizeCalculation)=> {
+  const findExistingShoes = "SELECT shoesname FROM stockx.shoes WHERE shoesname = ($1)"
   const query = 'INSERT INTO stockx.shoes(shoesname, size_data, true_to_size_calculation) VALUES($1, $2, $3) RETURNING *'
   const values = [shoesName, shoesSize, trueToSizeCalculation]
-  pgQuery(query,values, (err,res)=> {
+  pgQuery(findExistingShoes,[shoesName], (err,res)=> {
     if (err) throw new Error(err);
+    if (res.rows.length > 0 ) throw new Error('This shoes entry already exists')
+    if (res.rows.length === 0) {
+      pgQuery(query,values, (err,res) => {
+        if (err) throw new Error(err)
+      })
+    }
   })
 }
 
 module.exports = {
   pool,
-  createNewEntries,
+  createNewEntry,
   pgQuery,
   getClient
 }
