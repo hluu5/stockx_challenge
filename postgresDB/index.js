@@ -6,7 +6,7 @@ const pool = new Pool({
   //your username for postgres here
   user: 'postgres',
   //host should be ip address of your postgres container, your cloud postgres db or your local postgres db
-  host: 'localhost',
+  host: process.env.POSTGRES_HOST,
   //Connect to PORT that is dedicated to your postgres db. Default is 5432.
   port: 5432,
   //remember to create one if it's not already there. You can do this with pgAdmin. Login to your account
@@ -28,7 +28,7 @@ pool.on('error', (err, client) => {
 
 pool.connect().then(()=>{
   console.log('connected to Postgres')
-})
+}).catch(err=>console.log(err))
 
 const pgQuery = (q, params, callback) => {
   const start = Date.now();
