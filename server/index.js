@@ -1,3 +1,4 @@
+require('newrelic');
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
@@ -19,15 +20,24 @@ app.get('/', (req,res)=> {
 })
 
 app.get('/trueToSizeCalculation', (req,res)=> {
-  //Note this API doesn't need to handle error because error is being handled internally
-  //by retrieveShoesData function and it sending error as data
   if (req.query) {
     retrieveShoesData(req.query.shoesname, data => {
-      res.send(data)
+      if (data.length>0) res.send(data);
+      res.status(401)
+      res.send("shoes entry doesn't exist")
     })
   }
 })
 
+app.get('/trueToSizeCalculation/:shoesname', (req,res)=> {
+  if (req.params.shoesname) {
+    retrieveShoesData(req.params.shoesname, data => {
+      if (data.length>0) res.send(data);
+      res.status(401)
+      res.send("shoes entry doesn't exist")
+    })
+  }
+})
 
 app.listen(PORT, ()=> {
   console.log(`Now accepting connection on port ${PORT}`)

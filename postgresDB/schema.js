@@ -16,7 +16,7 @@ const createTableQuery = `
 
 //index shoes name for faster lookup
 const createIndexQuery = `
-  CREATE INDEX shoesname ON stockx.shoes
+  CREATE INDEX IF NOT EXISTS shoesname ON stockx.shoes
   USING btree
   ( shoesname ASC )
 `
@@ -31,11 +31,15 @@ pool.connect().then((client)=>{
     return client.query(createIndexQuery)
   })
   .then((res)=>{
-    client.release();
-    console.log(res)
+    pool.end();
+    return
+  })
+  .catch((err)=>{
+    pool.end();
+    console.log(err)
   })
 }).catch((err)=>{
-  client.release();
+  pool.end();
   console.log(err)
 })
 

@@ -9,8 +9,7 @@ const pool = new Pool({
   host: process.env.POSTGRES_HOST,
   //Connect to PORT that is dedicated to your postgres db. Default is 5432.
   port: 5432,
-  //remember to create one if it's not already there. You can do this with pgAdmin. Login to your account
-  //Click on PostgresSQL 10. Right Click on Databases and Create new one
+  //created by running 'npm run createdb'
   database: 'stockx',
   //your password here
   password: process.env.PASSWORD,
@@ -32,11 +31,10 @@ pool.connect().then(()=>{
 
 const pgQuery = (q, params, callback) => {
   const start = Date.now();
-  return pool.query(q, params, (err, res) => {
+  pool.query(q, params, (err, res) => {
     const duration = Date.now() - start
     callback(err, res)
     console.log('executed query', { q, duration: duration +`ms`, rows: res.rowCount, inserted: res.rows })
-
   })
 };
 
@@ -69,7 +67,7 @@ const getClient = (callback) => {
 const retrieveShoesData = (shoesName, callback) => {
   const findExistingShoes = "SELECT shoes_id, shoesname, size_data, true_to_size_calculation FROM stockx.shoes WHERE shoesname = ($1)"
   pgQuery(findExistingShoes,[shoesName], (err,res)=> {
-    if (err) throw new Error(err);
+    if (err) console.log(err);
     if (res) callback(res.rows);
   })
 }
@@ -80,10 +78,12 @@ const createNewEntry = (shoesName, shoesSize, trueToSizeCalculation)=> {
   const values = [shoesName, shoesSize, trueToSizeCalculation]
   //Check if entry already exists
   retrieveShoesData(shoesName, (res)=> {
-    if (res.length > 0) throw new Error('This shoes entry already exists');
+    if (res.length > 0) {
+      console.error('ERROR: This shoes entry already exists')
+    }
     if (res.length === 0) {
       pgQuery(query,values, (err,res) => {
-        if (err) throw new Error(err)
+        if (err) console.log(err)
       })
     }
   })
