@@ -29,14 +29,70 @@ pool.connect().then(()=>{
   console.log('connected to Postgres')
 }).catch(err=>console.log(err))
 
-const pgQuery = (q, params, callback) => {
+const pgQuery = async (q, params, callback) => {
   const start = Date.now();
-  pool.query(q, params, (err, res) => {
-    const duration = Date.now() - start
-    callback(err, res)
-    console.log('executed query', { q, duration: duration +`ms`, rows: res.rowCount, inserted: res.rows })
-  })
+  try {
+    const result = await pool.query(q, params)
+    const duration = await Date.now() - start;
+    await console.log('executed query', { q, duration: duration +`ms`})
+    return await callback(result)
+  }
+  catch(err){ console.log(err) }
 };
+
+const getUser = async(username) => {
+  const query = "SELECT * FROM stockx.users WHERE username = ($1)"
+  return await pgQuery(query,[username],async(data)=>{
+    console.log(data.rows)
+    return await data
+  })
+}
+
+const retrieveShoesData = async (shoesName, callback) => {
+  const findExistingShoes = "SELECT shoes_id, shoesname, size_data, true_to_size_calculation FROM stockx.shoes WHERE shoesname = ($1)"
+  return await pgQuery(findExistingShoes,[shoesName], async (res)=> {
+    if (res) {
+      return await callback(res.rows)
+    };
+  })
+}
+
+const createNewEntry = async (shoesName, shoesSize, trueToSizeCalculation) => {
+  // const findExistingShoes = "SELECT shoesname FROM stockx.shoes WHERE shoesname = ($1)"
+  const query = 'INSERT INTO stockx.shoes(shoesname, size_data, true_to_size_calculation) VALUES($1, $2, $3) RETURNING *'
+  const values = [shoesName, shoesSize, trueToSizeCalculation]
+  //Check if entry already exists
+  return await retrieveShoesData(shoesName, (res)=> {
+    if (res.length > 0) {
+      const error = 'ERROR: This shoes entry already exists'
+      console.error(error)
+      return error
+    }
+    if (res.length === 0) {
+      return pgQuery(query,values, (res) => {
+        return res.rows
+      })
+    }
+  })
+}
+
+const deleteEntry = async (shoesname) => {
+  const query = 'DELETE FROM stockx.shoes WHERE shoesname = ($1)'
+  const value = [shoesname];
+  //Check if entry already exists
+  return await retrieveShoesData(shoesname, async (res)=> {
+    if (res.length === 0) {
+      const error = "ERROR: This shoes entry doesn't exist"
+      console.error(error)
+      return error
+    }
+    if (res.length > 0) {
+      return await pgQuery(query, value, async (res) => {
+        return await res.rows
+      })
+    }
+  })
+}
 
 //Utility function to debug last client blocking the pool
 const getClient = (callback) => {
@@ -64,35 +120,12 @@ const getClient = (callback) => {
   })
 }
 
-const retrieveShoesData = (shoesName, callback) => {
-  const findExistingShoes = "SELECT shoes_id, shoesname, size_data, true_to_size_calculation FROM stockx.shoes WHERE shoesname = ($1)"
-  pgQuery(findExistingShoes,[shoesName], (err,res)=> {
-    if (err) console.log(err);
-    if (res) callback(res.rows);
-  })
-}
-
-const createNewEntry = (shoesName, shoesSize, trueToSizeCalculation)=> {
-  // const findExistingShoes = "SELECT shoesname FROM stockx.shoes WHERE shoesname = ($1)"
-  const query = 'INSERT INTO stockx.shoes(shoesname, size_data, true_to_size_calculation) VALUES($1, $2, $3) RETURNING *'
-  const values = [shoesName, shoesSize, trueToSizeCalculation]
-  //Check if entry already exists
-  retrieveShoesData(shoesName, (res)=> {
-    if (res.length > 0) {
-      console.error('ERROR: This shoes entry already exists')
-    }
-    if (res.length === 0) {
-      pgQuery(query,values, (err,res) => {
-        if (err) console.log(err)
-      })
-    }
-  })
-}
-
 module.exports = {
   pool,
   createNewEntry,
   retrieveShoesData ,
   pgQuery,
-  getClient
+  getClient,
+  deleteEntry,
+  getUser
 }

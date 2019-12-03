@@ -6,7 +6,8 @@ Please pull down from github. If you are running this locally without using Dock
 - create a username 'postgres', with password: 'postgres"
 - create a db name 'stockx'
 - make sure to change file /postgresDB/index.js line 9 and 13 accordingly
-Schema and table are created automatically using 'npm run createdb' (will be done later in the process) script
+
+Schema and table are created automatically using 'npm run createdb' (will be done later in the process) script. Initial user data is also created with this script
 
 To run the app, please cd into stockx folder then use the following commands:
 ```
@@ -25,13 +26,13 @@ npm run start
 # - docker-compose.yml     => line 11 to your VM's ip address
 After you finished, please run the following command:
 ```
-docker build -t <your username>/<app name> .
+docker build -t hluu5/stockx .
 
 #To find your image:
 
 docker images
 
-docker run -p 4000:4000 -d --name stockx <your username>/<app name>
+docker run -p 4000:4000 -d --name stockx hluu5/stockx
 
 #create a database and table if not exist
 docker exec -ti stockx npm run createdb
