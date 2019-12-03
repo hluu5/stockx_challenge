@@ -1,6 +1,7 @@
 const { Pool } = require('pg');
 const dotenv = require('dotenv');
 dotenv.config();
+const { log } = require('../server/utils.js')
 
 const pool = new Pool({
   //your username for postgres here
@@ -26,7 +27,7 @@ pool.on('error', (err, client) => {
 })
 
 pool.connect().then(()=>{
-  console.log('connected to Postgres')
+  log.info('connected to Postgres')
 }).catch(err=>console.log(err))
 
 const pgQuery = async (q, params, callback) => {

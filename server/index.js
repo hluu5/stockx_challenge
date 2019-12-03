@@ -3,6 +3,7 @@ const cookieParser = require('cookie-parser');
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const { log } = require('./utils.js');
 
 const bcrypt = require('bcryptjs');
 const { retrieveShoesData, createNewEntry,getUser, pool } = require('../postgresDB/index.js');
