@@ -1,0 +1,42 @@
+{"name":"bunyan-log","hostname":"Huy-PC","pid":8692,"level":30,"msg":"connected to Postgres","time":"2019-12-03T18:54:11.976Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":9696,"level":30,"msg":"connected to Postgres","time":"2019-12-03T18:54:27.554Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":9976,"level":30,"msg":"connected to Postgres","time":"2019-12-03T18:55:39.113Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":6140,"level":30,"msg":"connected to Postgres","time":"2019-12-03T18:55:54.582Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":10208,"level":30,"msg":"connected to Postgres","time":"2019-12-03T18:56:02.728Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":6252,"level":30,"msg":"connected to Postgres","time":"2019-12-03T18:56:23.515Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":12356,"level":30,"msg":"connected to Postgres","time":"2019-12-03T18:56:33.563Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":6252,"level":30,"msg":"executed query { q: 'SELECT * FROM stockx.users WHERE username = ($1)',\n  duration: '43ms' }","time":"2019-12-03T18:56:33.603Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":9796,"level":30,"msg":"connected to Postgres","time":"2019-12-03T18:58:57.388Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":9344,"level":30,"msg":"connected to Postgres","time":"2019-12-03T18:59:28.063Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":6124,"level":30,"msg":"connected to Postgres","time":"2019-12-03T18:59:37.657Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":5140,"level":30,"msg":"connected to Postgres","time":"2019-12-03T18:59:54.133Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":9848,"level":30,"msg":"connected to Postgres","time":"2019-12-03T19:00:03.122Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":5140,"level":30,"msg":"executed query { q: 'SELECT * FROM stockx.users WHERE username = ($1)',\n  duration: '72ms' }","time":"2019-12-03T19:00:03.193Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":5140,"level":30,"msg":"[]","time":"2019-12-03T19:00:03.193Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":12704,"level":30,"msg":"connected to Postgres","time":"2019-12-03T19:00:46.639Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":12704,"level":30,"msg":"executed query { q:\n   'SELECT shoes_id, shoesname, size_data, true_to_size_calculation FROM stockx.shoes WHERE shoesname = ($1)',\n  duration: '313ms' }","time":"2019-12-03T19:00:46.652Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":12704,"level":30,"msg":"executed query { q:\n   'INSERT INTO stockx.shoes(shoesname, size_data, true_to_size_calculation) VALUES($1, $2, $3) RETURNING *',\n  duration: '10ms' }","time":"2019-12-03T19:00:46.662Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":12704,"level":30,"msg":"executed query { q:\n   'SELECT shoes_id, shoesname, size_data, true_to_size_calculation FROM stockx.shoes WHERE shoesname = ($1)',\n  duration: '5ms' }","time":"2019-12-03T19:00:46.688Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":12704,"level":30,"msg":"executed query { q:\n   'SELECT shoes_id, shoesname, size_data, true_to_size_calculation FROM stockx.shoes WHERE shoesname = ($1)',\n  duration: '4ms' }","time":"2019-12-03T19:00:46.731Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":12704,"level":30,"msg":"executed query { q: 'SELECT * FROM stockx.users WHERE username = ($1)',\n  duration: '3ms' }","time":"2019-12-03T19:00:46.772Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":12704,"level":30,"msg":"[ { user_id: 1,\n    username: 'admin',\n    password:\n     '$2a$10$d.kYimAEe/mdDZXhjyFJxe3UCC7GobtqHBngG5BRi5QU4COOgXkpC' } ]","time":"2019-12-03T19:00:46.773Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":12704,"level":30,"msg":"executed query { q:\n   'SELECT shoes_id, shoesname, size_data, true_to_size_calculation FROM stockx.shoes WHERE shoesname = ($1)',\n  duration: '3ms' }","time":"2019-12-03T19:00:46.904Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":12704,"level":30,"msg":"executed query { q:\n   'INSERT INTO stockx.shoes(shoesname, size_data, true_to_size_calculation) VALUES($1, $2, $3) RETURNING *',\n  duration: '3ms' }","time":"2019-12-03T19:00:46.907Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":12704,"level":30,"msg":"executed query { q:\n   'SELECT shoes_id, shoesname, size_data, true_to_size_calculation FROM stockx.shoes WHERE shoesname = ($1)',\n  duration: '2ms' }","time":"2019-12-03T19:00:46.919Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":12704,"level":30,"msg":"executed query { q: 'SELECT * FROM stockx.users WHERE username = ($1)',\n  duration: '2ms' }","time":"2019-12-03T19:00:46.931Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":12704,"level":30,"msg":"[]","time":"2019-12-03T19:00:46.931Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":12704,"level":30,"msg":"executed query { q:\n   'SELECT shoes_id, shoesname, size_data, true_to_size_calculation FROM stockx.shoes WHERE shoesname = ($1)',\n  duration: '2ms' }","time":"2019-12-03T19:00:46.938Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":12704,"level":30,"msg":"executed query { q: 'DELETE FROM stockx.shoes WHERE shoesname = ($1)',\n  duration: '3ms' }","time":"2019-12-03T19:00:46.942Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":12704,"level":30,"msg":"executed query { q: 'SELECT * FROM stockx.users WHERE username = ($1)',\n  duration: '2ms' }","time":"2019-12-03T19:00:46.948Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":12704,"level":30,"msg":"[ { user_id: 1,\n    username: 'admin',\n    password:\n     '$2a$10$d.kYimAEe/mdDZXhjyFJxe3UCC7GobtqHBngG5BRi5QU4COOgXkpC' } ]","time":"2019-12-03T19:00:46.949Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":12704,"level":30,"msg":"executed query { q:\n   'SELECT shoes_id, shoesname, size_data, true_to_size_calculation FROM stockx.shoes WHERE shoesname = ($1)',\n  duration: '24ms' }","time":"2019-12-03T19:00:47.074Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":12704,"level":50,"msg":"ERROR: This shoes entry already exists","time":"2019-12-03T19:00:47.074Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":12704,"level":30,"msg":"executed query { q:\n   'SELECT shoes_id, shoesname, size_data, true_to_size_calculation FROM stockx.shoes WHERE shoesname = ($1)',\n  duration: '3ms' }","time":"2019-12-03T19:00:47.083Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":12704,"level":50,"msg":"ERROR: This shoes entry doesn't exist","time":"2019-12-03T19:00:47.084Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":12704,"level":30,"msg":"executed query { q:\n   'SELECT shoes_id, shoesname, size_data, true_to_size_calculation FROM stockx.shoes WHERE shoesname = ($1)',\n  duration: '5ms' }","time":"2019-12-03T19:00:47.089Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":12704,"level":30,"msg":"executed query { q: 'DELETE FROM stockx.shoes WHERE shoesname = ($1)',\n  duration: '4ms' }","time":"2019-12-03T19:00:47.093Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":12704,"level":30,"msg":"connected to Postgres","time":"2019-12-03T19:00:47.325Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":12704,"level":30,"msg":"executed query { q: 'SELECT * FROM stockx.users WHERE username = ($1)',\n  duration: '4ms' }","time":"2019-12-03T19:00:47.329Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":12704,"level":30,"msg":"[]","time":"2019-12-03T19:00:47.329Z","v":0}
+{"name":"bunyan-log","hostname":"1df7c6bfeb20","pid":18,"level":30,"msg":"Now accepting connection on port 4000","time":"2019-12-03T20:03:31.769Z","v":0}
+{"name":"bunyan-log","hostname":"1df7c6bfeb20","pid":18,"level":30,"msg":"connected to Postgres","time":"2019-12-03T20:03:31.802Z","v":0}

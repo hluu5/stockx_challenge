@@ -4,12 +4,12 @@ module.exports = {
     name: "bunyan-log",
     streams: [
         {
-            level: 'info',
-            path: '../appLog.json' // log INFO and above to stdout
+            level: 'debug',
+            path: './appLog.log' // log INFO and above to stdout
         },
         {
             level: 'error',
-            path: '../appError.json' // log ERROR and above to a file
+            path: './appError.log' // log ERROR and above to a file
         }
     ]
   })

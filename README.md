@@ -51,7 +51,7 @@ Now you can go to your ip address at port 4000 to access your docker container. 
   docker exec -ti stockx npm run createdb
 ```
 
-## Please create some fake data before testing out the url:
+## Please create some fake data before testing out the url. Inside the test file, dummy data is created and destroyed for you:
 ```
 ## Using docker container:
   docker exec -ti stockx npm run test
@@ -59,6 +59,9 @@ Now you can go to your ip address at port 4000 to access your docker container. 
 ## Locally:
   npm run test
 ```
+
+## To insert data, you can use POSTMAN or axios to make a post request to '/createNewEntry':
+. Format:
 
 ## There are two ways to retrieve data from server API:
 1. Passing params in url:
@@ -79,5 +82,17 @@ Now you can go to your ip address at port 4000 to access your docker container. 
     .then(data=> console.log(data.data))
     .catch(err=>console.log(err))
   ```
+## Logs are not being shown in console because we don't want user to see them in production-ready app
+## Instead, they are saved inside appLog.log and appError.log. This will reduce run time and improve security
+```
+## To access log files inside Docker Container, you can copy them to your host local directory using commands:
+
+docker cp <container-id>:/path/to/file ./local-dir
+
+## Example: copy appLog.log file to host's "tests" folder:
+docker cp 1df7c6bfeb20:app/appLog.log ./tests
+```
+### Monitoring:
+I'm using New Relic APM to monitor my app. Its key metrics are being exported to New Relic APM cloud and can be accessed from there.
 
 

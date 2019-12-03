@@ -22,29 +22,29 @@ const pool = new Pool({
 
 // the pool will emit an error on behalf of any idle clients
 pool.on('error', (err, client) => {
-  console.error('Unexpected error on idle client', err)
+  log.error('Unexpected error on idle client', err)
   process.exit(-1)
 })
 
 pool.connect().then(()=>{
   log.info('connected to Postgres')
-}).catch(err=>console.log(err))
+}).catch(err=>log.error(err))
 
 const pgQuery = async (q, params, callback) => {
   const start = Date.now();
   try {
     const result = await pool.query(q, params)
     const duration = await Date.now() - start;
-    await console.log('executed query', { q, duration: duration +`ms`})
+    await log.info('executed query', { q, duration: duration +`ms`})
     return await callback(result)
   }
-  catch(err){ console.log(err) }
+  catch(err){ log.error(err) }
 };
 
 const getUser = async(username) => {
   const query = "SELECT * FROM stockx.users WHERE username = ($1)"
   return await pgQuery(query,[username],async(data)=>{
-    console.log(data.rows)
+    log.info(data.rows)
     return await data
   })
 }
@@ -66,7 +66,7 @@ const createNewEntry = async (shoesName, shoesSize, trueToSizeCalculation) => {
   return await retrieveShoesData(shoesName, (res)=> {
     if (res.length > 0) {
       const error = 'ERROR: This shoes entry already exists'
-      console.error(error)
+      log.error(error)
       return error
     }
     if (res.length === 0) {
@@ -84,7 +84,7 @@ const deleteEntry = async (shoesname) => {
   return await retrieveShoesData(shoesname, async (res)=> {
     if (res.length === 0) {
       const error = "ERROR: This shoes entry doesn't exist"
-      console.error(error)
+      log.error(error)
       return error
     }
     if (res.length > 0) {
@@ -106,8 +106,8 @@ const getClient = (callback) => {
     }
     // set a timeout of 5 seconds, after which we will log this client's last query
     const timeout = setTimeout(() => {
-      console.error('A client has been checked out for more than 5 seconds!')
-      console.error(`The last executed query on this client was: ${client.lastQuery}`)
+      log.error('A client has been checked out for more than 5 seconds!')
+      log.error(`The last executed query on this client was: ${client.lastQuery}`)
     }, 5000)
     const release = (err) => {
       // call the actual 'done' method, returning this client to the pool

@@ -23,11 +23,11 @@ app.use(cookieParser());
 // const clientRedis = redis.createClient(process.env.REDIS_URL);
 
 // clientRedis.on('connect', function() {
-//     console.log('Redis client connected');
+//     log.info('Redis client connected');
 // });
 
 // clientRedis.on('error', function (err) {
-//     console.log('Something went wrong ' + err);
+//     log.info('Something went wrong ' + err);
 // });
 
 app.get('/', (req,res)=> {
@@ -75,35 +75,16 @@ app.post('/createNewEntry', async (req,res,next)=> {
 
 app.post('/createNewEntry', async (req,res)=> {
     if (req.body) {
-    const response = await createNewEntry(req.body.shoesName, req.body.shoesSize, req.body.trueToSizeCalculation)
-    if (response.length===1) {
-      await res.send(response)
-    }
-    await res.status(401).end(response)
+      const response = await createNewEntry(req.body.shoesName, req.body.shoesSize, req.body.trueToSizeCalculation)
+      if (response.length===1) {
+        await res.send(response)
+      }
+      await res.status(401).end(response)
     }
 })
 
-app.post('/login',async (req,res)=>{
-  console.log(req.sessionID);
-  if(req.body.username) {
-    const response = await getUser(req.body.username);
-    if (response.length===0) {
-      await res.status(401).end("User doesn't exist")
-    }
-    const hash = await bcrypt.compare(req.body.password, response.rows[0].password)
-    if (hash === true) {
-      req.session.username = await req.body.username;
-      await req.session.save();
-      await console.log(req.session.username)
-      await res.send("User is logged in")
-    }
-    if (hash === false) {
-      await res.status(400).end('Wrong Password')
-    }
-  }
-})
 
 module.exports = app.listen(PORT, ()=> {
-  console.log(`Now accepting connection on port ${PORT}`)
+  log.info(`Now accepting connection on port ${PORT}`)
 })
 
