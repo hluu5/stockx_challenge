@@ -95,6 +95,15 @@ const deleteEntry = async (shoesname) => {
   })
 }
 
+const updateExistingEntry = async (shoesname, shoesSize, avgTrueToSize) => {
+  const query = 'UPDATE stockx.shoes SET (size_data, true_to_size_calculation) = ($2, $3) WHERE shoesname = ($1)'
+  const values = [shoesname, shoesSize,avgTrueToSize];
+  return await pgQuery(query,values, (res)=> {
+    log.info(res.rows)
+    console.log(res.rows)
+  })
+}
+
 //Utility function to debug last client blocking the pool
 const getClient = (callback) => {
   pool.connect((err, client, done) => {
@@ -128,5 +137,6 @@ module.exports = {
   pgQuery,
   getClient,
   deleteEntry,
-  getUser
+  getUser,
+  updateExistingEntry
 }

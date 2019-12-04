@@ -11,7 +11,7 @@ const createShoesTableQuery = `
     shoes_id SERIAL PRIMARY KEY,
     shoesname VARCHAR (50) UNIQUE NOT NULL,
     size_data JSON,
-    true_to_size_calculation INT
+    true_to_size_calculation NUMERIC
   )
 `
 
