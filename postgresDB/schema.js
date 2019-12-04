@@ -1,4 +1,5 @@
 const { pool, pgQuery } = require('./index.js');
+const { log } = require('../server/utils.js');
 const bcrypt = require('bcryptjs');
 
 const schemaQuery = `
@@ -11,7 +12,7 @@ const createShoesTableQuery = `
     shoes_id SERIAL PRIMARY KEY,
     shoesname VARCHAR (50) UNIQUE NOT NULL,
     size_data JSON,
-    true_to_size_calculation NUMERIC
+    true_to_size_calculation REAL
   )
 `
 
@@ -36,24 +37,13 @@ const createUserIndexQuery = `
   ( username ASC )
 `
 
-const createUserSessionTableQuery = `
-  CREATE TABLE IF NOT EXISTS public.sessions (
-    "sid" varchar NOT NULL COLLATE "default",
-    "sess" json NOT NULL,
-    "username" varchar,
-    "expire" timestamp(6) NOT NULL
-  )
-  WITH (OIDS=FALSE);
-  ALTER TABLE public.sessions ADD CONSTRAINT "session_pkey" PRIMARY KEY ("sid") NOT DEFERRABLE INITIALLY IMMEDIATE;
-`
-
 //Create initial Admin that could log in and use server
 const createInitialAdmin = ()=> {
   const query = 'INSERT INTO stockx.users(username, password) VALUES($1, $2) RETURNING *'
   const password = bcrypt.hashSync('admin', 10);
   const values = ['admin', password]
   pgQuery(query,values, (data)=> {
-    console.log(data.rows)
+    log.info('Admin User Created In Postgres: ', data.rows)
   })
 }
 
@@ -65,14 +55,12 @@ const connect = async ()=> {
     await client.query(createShoesIndexQuery);
     await client.query(createUserTableQuery);
     await client.query(createUserIndexQuery);
-    await client.query(createUserSessionTableQuery);
-    // await client.query(createUserSessionIndexQuery);
     await client.release();
     await createInitialAdmin();
   }
   catch(err){
     pool.end();
-    console.log(err)
+    log.error('ERROR IN CREATING DB AND RECORD: ', err)
   }
 }
 

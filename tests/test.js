@@ -30,7 +30,7 @@ describe('Handling server API', ()=> {
 		const res = await request(app)
 		.get('/trueToSizeCalculation/')
 		.query({shoesname: 'shoses3wqsadrwqweqr2'})
-		expect(res.statusCode).toEqual(401)
+		expect(res.statusCode).toEqual(404)
 		expect(res.text).toEqual("shoes entry doesn't exist")
 	})
 
@@ -88,7 +88,7 @@ describe('Handling server API', ()=> {
 			},
      	trueToSizeCalculation: 3
 		})
-		expect(res.statusCode).toEqual(401)
+		expect(res.statusCode).toEqual(400)
 		expect(res.text).toEqual("ERROR: This shoes entry already exists")
 	})
 })

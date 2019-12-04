@@ -2,6 +2,7 @@ const { retrieveShoesData, createNewEntry, getUser, pool } = require('../../post
 const fs = require('fs');
 const JSONStream = require('JSONStream');
 const bcrypt = require('bcryptjs');
+const axios = require('axios')
 
 module.exports = {
   handleCreateNewEntry: async (req, res) => {
@@ -10,7 +11,7 @@ module.exports = {
       if (response.length === 1) {
         await res.send(response)
       }
-      await res.status(401).end(response)
+      await res.status(400).end(response)
     }
   },
 
@@ -25,7 +26,7 @@ module.exports = {
           await next()
         }
         if (hash === false) {
-          await res.status(400).end('Wrong Password')
+          await res.status(401).end('Wrong Password')
         }
       }
     }
@@ -34,8 +35,8 @@ module.exports = {
   handleTrueToSizeCalculation: (req, res) => {
     if (req.query) {
       retrieveShoesData(req.query.shoesname, data => {
-        if (data.length > 0) res.send(data)
-        res.status(401).end("shoes entry doesn't exist")
+        if (data.length > 0) res.send(data);
+        res.status(404).end("shoes entry doesn't exist")
       })
     }
   },
@@ -44,7 +45,7 @@ module.exports = {
     if (req.params.shoesname) {
       retrieveShoesData(req.params.shoesname, data => {
         if (data.length>0) res.send(data);
-        res.status(401).end("shoes entry doesn't exist")
+        res.status(404).end("shoes entry doesn't exist")
       })
     }
   },
@@ -59,30 +60,33 @@ module.exports = {
 
   retrieveParseAndInsertToPostgres: async (req,res)=>{
     /* IN REAL PRODUCTION, I WOULD ASSUME WE EITHER DOWNLOAD THE LARGE JSON FILES OR MAKE
-    HTTP REQUESTS AND THEN PARSE THEM TO COMPUTE AVG SHOES SIZE USING SOMETHING STREAM LIKE THIS:
+    HTTP REQUESTS AND THEN PARSE THEM TO COMPUTE AVG SHOES SIZE USING A STREAM LIKE THIS:
     */
     const shoes = {}
     const JSONparser = await JSONStream.parse('*');
     await axios({
       method: 'GET',
       url: req.query.url,
-      responseType: 'stream'
+      responseType: 'stream' //create a readstream and pipe
     })
     .then(function(response) {
       response.data.pipe(JSONparser) //parse JSON stream by line
       JSONparser.on('data', (obj) => {
+        //create an obj of data to be inserted into postgres
         parseStreamAndWriteDataObj(shoes,obj)
       });
 
       JSONparser.on('end', async ()=>{
         log.info('READING STREAM FROM API ENDED');
+        res.status(201).send('New Data Created')
       })
 
       JSONparser.on('error',(err)=>{
-        log.error('ERROR', err)
+        log.error('ERROR READING STREAM', err);
+        res.status(500).end('FAILED CREATING NEW DATA IN SERVER');
       })
     })
-    .catch(err=>{console.log(err)})
+    .catch(err=>{log.error(err)})
 
     //Insert to database
     for (let key in shoes) {
@@ -90,6 +94,4 @@ module.exports = {
     }
     await res.send('Finished Inserting New Data To Postgres')
   },
-
-
 }

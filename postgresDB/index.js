@@ -38,13 +38,13 @@ const pgQuery = async (q, params, callback) => {
     await log.info('executed query', { q, duration: duration +`ms`})
     return await callback(result)
   }
-  catch(err){ log.error(err) }
+  catch(err){ log.error('ERROR QUERYING: ', err) }
 };
 
 const getUser = async(username) => {
   const query = "SELECT * FROM stockx.users WHERE username = ($1)"
   return await pgQuery(query,[username],async(data)=>{
-    log.info(data.rows)
+    log.info('USER:', data.rows)
     return await data
   })
 }
