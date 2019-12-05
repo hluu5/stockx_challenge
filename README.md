@@ -27,7 +27,7 @@ npm run start
 go to <local ip>:4000/api-docs
 ```
 ## The easiest way to have the app running is to spin up the app and db together using Docker_compose.
-#### Before building your Docker Image, please check your VM's ip address and change the following files:
+#### Before building your Docker Image, please check your VM's ip address and change the following files in root folder:
 #### - docker-compose.yml
 ####  => line 11 to your VM's ip address
 ####  => line 12 to your VM's ip address. Remember to prepend "http://" for this one
