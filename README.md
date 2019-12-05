@@ -26,12 +26,13 @@ npm run start
 #use swagger:
 go to <local ip>:4000/api-docs
 ```
-#### The easiest way to have the app running is to spin up the app and db together using Docker_compose. # Before building your Docker Image, please check your VM's ip address and change the following files:
-# - docker-compose.yml
-#  => line 11 to your VM's ip address
-#  => line 12 to your VM's ip address. Remember to prepend "http://" for this one
+## The easiest way to have the app running is to spin up the app and db together using Docker_compose.
+#### Before building your Docker Image, please check your VM's ip address and change the following files:
+#### - docker-compose.yml
+####  => line 11 to your VM's ip address
+####  => line 12 to your VM's ip address. Remember to prepend "http://" for this one
 
-# Please run the following script:
+### Please run the following script:
 ```
   docker-compose up
   docker exec -ti stockx npm run createdb
@@ -62,15 +63,14 @@ docker exec -ti stockx npm run seed
 
 Now you can go to your ip address at port 4000 to access your docker container. On older windows version, you might want to try going to ip address that was assigned to your VM
 
-### use swagger:
+### To Use Swagger:
 ```
 go to <docker ip address>:4000/api-docs
 ```
 
 ## To insert data manually, you can use POSTMAN or axios to make a post request to '/createNewEntry':
-. Format:
-
-## There are two ways to retrieve data from server API:
+### Format:
+#### There are two ways to retrieve data from server API:
 1. Passing params in url:
   format: http://<your VM or localhost ip address>:4000/trueToSizeCalculation/:shoesname
 ```
@@ -89,8 +89,9 @@ go to <docker ip address>:4000/api-docs
     .then(data=> console.log(data.data))
     .catch(err=>console.log(err))
   ```
-## Logs are not being shown in console because we don't want user to see them in production-ready app
-## Instead, they are saved inside 'logs' folder: 'appLog.log' and 'appError.log'. This will reduce run time and improve security:
+### Logging:
+#### Logs are not being shown in console because we don't want user to see them in production-ready app
+#### Instead, they are saved inside 'logs' folder: 'appLog.log' and 'appError.log'. This will reduce run time and improve security:
 ```
 ## To access log files inside Docker Container, you can copy them to your host local directory using commands:
 
