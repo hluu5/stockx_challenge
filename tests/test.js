@@ -1,10 +1,8 @@
 const { createNewEntry, deleteEntry }= require('../postgresDB/index.js');
-const { retrieveShoesData } = require('../postgresDB/index.js');
-const { pgQuery } = require('../postgresDB/index.js');
-const { pool } = require('../postgresDB/index.js');
-const axios = require('axios');
 const request = require('supertest')
 const app = require('../server/index.js');
+const dotenv = require('dotenv');
+dotenv.config();
 
 beforeAll(async ()=>{
 	await createNewEntry('shoses3wqsad4r2', {
@@ -22,17 +20,18 @@ describe('Handling server API', ()=> {
 		const res = await request(app)
 		.get('/trueToSizeCalculation/')
 		.query({shoesname: 'shoses3wqsad4r2'})
-		expect(res.statusCode).toEqual(200)
-		expect(res.body[0].true_to_size_calculation).toBe(3)
+		await expect(res.statusCode).toEqual(200)
+		await expect(res.body[0].true_to_size_calculation).toBe(3)
 	})
 
 	it('Should notify of non-existing shoes entries', async ()=>{
 		const res = await request(app)
 		.get('/trueToSizeCalculation/')
 		.query({shoesname: 'shoses3wqsadrwqweqr2'})
-		expect(res.statusCode).toEqual(404)
-		expect(res.text).toEqual("shoes entry doesn't exist")
+		await expect(res.statusCode).toEqual(404)
+		await expect(res.text).toEqual("shoes entry doesn't exist")
 	})
+
 
 	it('Should create new shoes entries', async ()=>{
 		afterEach(async ()=>{
@@ -54,25 +53,25 @@ describe('Handling server API', ()=> {
 		const res2 = await request(app)
 		.get('/trueToSizeCalculation/')
 		.query({shoesname: 'shoses3wqr2'})
-		expect(res.statusCode).toEqual(200)
-		expect(res.body[0].true_to_size_calculation).toEqual(3)
+		await expect(res.statusCode).toEqual(200)
+		await expect(res.body[0].true_to_size_calculation).toEqual(3)
 	})
 
 	it('should not allow unauthorized user to create new entry', async ()=>{
 		const res = await request(app)
 		.post('/createNewEntry')
 		.send({
-			username:'admin1',
+			username:'admin1', //wrong username
 			password: 'admin1',
 			shoesName: 'shoses3wqsad4r2',
-     	shoesSize: {
+			shoesSize: {
 				'1':20,
 				'2':30,
 			},
-     	trueToSizeCalculation: 3
+			trueToSizeCalculation: 3
 		})
-		expect(res.statusCode).toEqual(401)
-		expect(res.text).toEqual("User doesn't exist")
+		await expect(res.statusCode).toEqual(401)
+		await expect(res.text).toEqual("User doesn't exist")
 	})
 
 	it('Should not allow creating duplicated shoes entries', async ()=>{
@@ -82,13 +81,31 @@ describe('Handling server API', ()=> {
 			username:'admin',
 			password: 'admin',
 			shoesName: 'shoses3wqsad4r2',
-     	shoesSize: {
+			shoesSize: {
 				'1':20,
 				'2':30,
 			},
-     	trueToSizeCalculation: 3
+			trueToSizeCalculation: 3
 		})
-		expect(res.statusCode).toEqual(400)
-		expect(res.text).toEqual("ERROR: This shoes entry already exists")
+		await expect(res.statusCode).toEqual(400)
+		await expect(res.text).toEqual("ERROR: This shoes entry already exists")
+	})
+
+	it('Should retrieves data from crowd-sourced API and saved to db', async ()=>{
+		const res = await request(app)
+		.get('/readJSONStreamAndStore')
+		.query({
+			url: `${process.env.HOST}:4000/fakeStream`,
+			username: 'admin',
+			password: 'admin'
+		})
+		await expect(res.statusCode).toEqual(200)
+		await expect(res.text).toEqual("FINISHED INSERTING NEW DATA TO POSTGRES")
+
+		const retrieveData = await request(app)
+		.get('/trueToSizeCalculation/')
+		.query({shoesname: 'abc'})
+		await expect(retrieveData.statusCode).toEqual(200)
+		await expect(retrieveData.body[0].true_to_size_calculation).toEqual(3.52027)
 	})
 })

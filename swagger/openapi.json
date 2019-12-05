@@ -1,0 +1,228 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "title" : "Sample Stockx Challenge API",
+    "description" : "This is a simple API to show case my server",
+    "contact" : {
+      "email" : "huyluu5@gmail.com"
+    },
+    "version" : "1.0.0"
+  },
+
+  "paths" : {
+    "/trueToSizeCalculation/" : {
+      "get" : {
+        "summary" : "get avg true to size calculation for specific shoes",
+        "description" : "Passing shoesname, you can get AVG True To Size Calculation\n",
+        "parameters" : [ {
+          "name" : "shoesname",
+          "in" : "query",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "example": "abc",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Avg True To Size Calculation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AvgTrueToSizeData"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          }
+        }
+      }
+    },
+    "/fakeStream" : {
+      "get" : {
+        "summary" : "get fake large stream of shoes data",
+        "description" : "Simulate a fake crowd-source API\n",
+        "responses" : {
+          "200" : {
+            "description" : "Large Stream of Shoes Data",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/fakeData"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Something went wrong with the request"
+          }
+        }
+      }
+    },
+    "/readJSONStreamAndStore" : {
+      "get" : {
+        "summary" : "Get data from a crowd-sourced API, process, and save to Postgresdb",
+        "description" : "Save new data to db",
+        "parameters" : [ {
+          "name" : "url",
+          "in" : "query",
+          "description" : "Pass a url of crowd-sourced API",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "example" : "http://localhost:4000/fakeStream",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "username",
+          "in" : "query",
+          "description" : "Pass a username of server. Default is 'admin'",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "example" : "admin",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "password",
+          "in" : "query",
+          "description" : "Pass a password of server. Default is 'admin'",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "example" : "admin",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "item created"
+          },
+          "401" : {
+            "description" : "Not authenticated"
+          },
+          "400" : {
+            "description" : "Shoes Entry Already Exists"
+          }
+        }
+      }
+    },
+    "/createNewEntry" : {
+      "post" : {
+        "summary" : "Manually Create a Data inside DB",
+        "description" : "Save new data to db",
+        "requestBody" : {
+          "description" : "shoes item to save to db",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/shoesData"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "item created"
+          },
+          "401" : {
+            "description" : "Not authenticated"
+          },
+          "400" : {
+            "description" : "Shoes Entry Already Exists"
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "AvgTrueToSizeData" : {
+        "required" : [ "shoesname", "size_data", "true_to_size_calculation" ],
+        "type" : "object",
+        "properties" : {
+          "shoesname" : {
+            "type" : "string",
+            "example" : "abc"
+          },
+          "size_data" : {
+            "type" : "object",
+            "example" : {
+              "1" : 1520,
+              "2" : 3040,
+              "3" : 152,
+              "4" : 17784,
+              "5" : 0
+            }
+          },
+          "true_to_size_calculation" : {
+            "type" : "number",
+            "example" : 3.52027
+          }
+        }
+      },
+      "shoesData" : {
+        "required" : [ "password", "shoesName", "shoesSize", "trueToSizeCalculation", "username" ],
+        "type" : "object",
+        "properties" : {
+          "shoesName" : {
+            "type" : "string",
+            "example" : "abc"
+          },
+          "shoesSize" : {
+            "type" : "object",
+            "example" : {
+              "1" : 1520,
+              "2" : 3040,
+              "3" : 152,
+              "4" : 17784,
+              "5" : 0
+            }
+          },
+          "trueToSizeCalculation" : {
+            "type" : "number",
+            "example" : 3.52027
+          },
+          "username" : {
+            "type" : "string",
+            "example" : "admin"
+          },
+          "password" : {
+            "type" : "string",
+            "example" : "admin"
+          }
+        }
+      },
+      "fakeData" : {
+        "required" : [ "shoeSizeData", "shoesname" ],
+        "type" : "object",
+        "properties" : {
+          "shoesname" : {
+            "type" : "string",
+            "example" : "abc"
+          },
+          "shoeSizeData" : {
+            "type" : "object",
+            "example" : {
+              "1" : 20,
+              "2" : 40,
+              "3" : 2,
+              "4" : 234,
+              "5" : 0
+            }
+          }
+        }
+      }
+    }
+  }
+}

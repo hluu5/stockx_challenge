@@ -3,11 +3,11 @@
 ### Instruction:
 Please pull down from github. If you are running this locally without using Docker, please make sure you finished the following before you go to next step:
 - postgresdb installed on you machine.
-- create a username 'postgres', with password: 'postgres"
-- create a db name 'stockx'
-- make sure to change file /postgresDB/index.js line 9 and 13 accordingly
+- create a role for PostgresDB with a username 'postgres', with password: 'postgres"
+- create a db named 'stockx'
+- make sure to change file /postgresDB/index.js line 8 and 14 accordingly
 
-Schema and table are created automatically using 'npm run createdb' (will be done later in the process) script. Initial user data is also created with this script
+Schema and table are created automatically using 'npm run createdb' script (will be done later in the process). Initial user data is also created with this script
 
 To run the app, please cd into stockx folder then use the following commands:
 ```
@@ -17,25 +17,46 @@ npm install
 #create database if not exists:
 npm run createdb
 
+#create some fake data:
+npm run seed
+
 #start app:
 npm run start
+
+#run automated test:
+npm run test
+```
+#### The easiest way to have the app running is to spin up the app and db together using Docker_compose. # Before building your Docker Image, please check your VM's ip address and change the following files:
+# - docker-compose.yml     => line 11 and 12 to your VM's ip address
+
+# Please run the following script:
+```
+  docker-compose up
+  docker exec -ti stockx npm run createdb
+  docker exec -ti stockx npm run seed
 ```
 
 #### To build your own Docker Image:
-# Before building your Docker Image, please check your VM's ip address and change the following files:
-# - docker-compose.yml     => line 11 to your VM's ip address
+
 After you finished, please run the following command:
 ```
 docker build -t hluu5/stockx .
 
-#To find your image:
+# To find your image:
 
 docker images
 
-docker run -p 4000:4000 -d --name stockx hluu5/stockx
+# Run docker container manually:
+docker run -p 4000:4000 -d --name stockx hluu5/stockx -e PASSWORD=postgres -e POSTGRES_HOST=<your ip address> -e HOST=<your ip address> -e SERVER_USER=admin -e SERVER_PASSWORD=admin
 
 #create a database and table if not exist
 docker exec -ti stockx npm run createdb
+
+#seed fake data:
+docker exec -ti stockx npm run seed
+
+#Run automated test:
+docker exec -ti stockx npm run test
 ```
 
 Now you can go to your ip address at port 4000 to access your docker container. On older windows version, you might want to try going to ip address that was assigned to your VM
@@ -45,22 +66,19 @@ Now you can go to your ip address at port 4000 to access your docker container. 
   docker run -p 5432:5432 --name postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=stockx -e POSTGRES_USER=postgres postgres
 ```
 
-#### The easiest way to have the app running is to spin up the app and db together using Docker_compose. Please run the following script:
-```
-  docker-compose up
-  docker exec -ti stockx npm run createdb
-```
+
 
 ## Please create some fake data before testing out the url. Inside the test file, dummy data is created and destroyed for you:
 ```
 ## Using docker container:
-  docker exec -ti stockx npm run test
-
+  docker exec -ti stockx npm run createdb
+  docker exec -ti stockx npm run seed
 ## Locally:
-  npm run test
+  npm run createdb
+  npm run seed
 ```
 
-## To insert data, you can use POSTMAN or axios to make a post request to '/createNewEntry':
+## To insert data manually, you can use POSTMAN or axios to make a post request to '/createNewEntry':
 . Format:
 
 ## There are two ways to retrieve data from server API:

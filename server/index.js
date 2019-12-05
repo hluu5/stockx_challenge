@@ -9,38 +9,49 @@ const {
   serveFakeStream,
   retrieveParseAndInsertToPostgres,
   handleTrueToSizeCalculationURL,
-  checkPasswordMiddleware
+  checkPasswordMiddleware,
+  checkPasswordMiddleware2
 } = require('./controllers/controllers.js')
-
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('../swagger/openapi.json');
 const dotenv = require('dotenv');
 dotenv.config();
 
-//import PORT variable from .env file. This file is ignored from github commit and
-//instruction to set up .env file will be given to team members
-//In real production, it's better to use a secret system management such as the AWS System Manager.
-const PORT = process.env.PORT;
-
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+
+//import PORT variable from .env file. This file is supposed to be ignored from github commit in real production
+//and instruction to set up .env file will be given to team members
+//Also, it's better to use a secret system management such as the AWS System Manager.
+const PORT = process.env.PORT;
+
+//Set up route for swagger UI:
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.get('/', (req,res)=> {
   res.send(`Please go to localhost:${PORT}/trueToSizeCalculation to get True To Size Calculation`)
 })
 
+//API to get true to size calculation using a request inside params
 app.get('/trueToSizeCalculation', handleTrueToSizeCalculation)
 
+//API to get true to size calculation using a request inside URL
 app.get('/trueToSizeCalculation/:shoesname', handleTrueToSizeCalculationURL)
 
+//API to create a fake writestream to client. This stimulates a crowd sourcing api:
 app.get('/fakeStream', serveFakeStream)
 
+//Simple authentication middleware. In real production, I could use Passport for authentication handler
+//and express-session to persist login session.
+app.get('/readJSONStreamAndStore', checkPasswordMiddleware2)
+
+//API to read from a crowd-sourced stream, process data, then save to db:
 app.get('/readJSONStreamAndStore', retrieveParseAndInsertToPostgres)
 
-//Simple authentication middleware. In real production, I could use Passport for authentication handler
-//and express-session to persists login session.
-//Unfortunately if we only make http request to login, it will refresh sessionID every time because no cookies
-//was passed and stored from browser
+//API to manually save to db, authencatiion middleware:
 app.post('/createNewEntry', checkPasswordMiddleware)
 
+//API to manually save to db, authencatiion middleware:
 app.post('/createNewEntry', handleCreateNewEntry)
 
 module.exports = app.listen(PORT, ()=> {

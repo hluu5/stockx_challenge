@@ -35,7 +35,7 @@ const pgQuery = async (q, params, callback) => {
   try {
     const result = await pool.query(q, params)
     const duration = await Date.now() - start;
-    await log.info('executed query', { q, duration: duration +`ms`})
+    await log.info('executed query', { q, duration: duration +`ms`, params})
     return await callback(result)
   }
   catch(err){ log.error('ERROR QUERYING: ', err) }
@@ -63,10 +63,10 @@ const createNewEntry = async (shoesName, shoesSize, trueToSizeCalculation) => {
   const query = 'INSERT INTO stockx.shoes(shoesname, size_data, true_to_size_calculation) VALUES($1, $2, $3) RETURNING *'
   const values = [shoesName, shoesSize, trueToSizeCalculation]
   //Check if entry already exists
-  return await retrieveShoesData(shoesName, (res)=> {
+  return await retrieveShoesData(shoesName, async (res)=> {
     if (res.length > 0) {
       const error = 'ERROR: This shoes entry already exists'
-      log.error(error)
+      await log.error(error, shoesName)
       return error
     }
     if (res.length === 0) {
@@ -84,7 +84,7 @@ const deleteEntry = async (shoesname) => {
   return await retrieveShoesData(shoesname, async (res)=> {
     if (res.length === 0) {
       const error = "ERROR: This shoes entry doesn't exist"
-      log.error(error)
+      log.error(error, shoesName)
       return error
     }
     if (res.length > 0) {
@@ -100,33 +100,6 @@ const updateExistingEntry = async (shoesname, shoesSize, avgTrueToSize) => {
   const values = [shoesname, shoesSize,avgTrueToSize];
   return await pgQuery(query,values, (res)=> {
     log.info(res.rows)
-    console.log(res.rows)
-  })
-}
-
-//Utility function to debug last client blocking the pool
-const getClient = (callback) => {
-  pool.connect((err, client, done) => {
-    const query = client.query.bind(client)
-    // monkey patch the query method to keep track of the last query executed
-    client.query = () => {
-      client.lastQuery = arguments
-      client.query.apply(client, arguments)
-    }
-    // set a timeout of 5 seconds, after which we will log this client's last query
-    const timeout = setTimeout(() => {
-      log.error('A client has been checked out for more than 5 seconds!')
-      log.error(`The last executed query on this client was: ${client.lastQuery}`)
-    }, 5000)
-    const release = (err) => {
-      // call the actual 'done' method, returning this client to the pool
-      done(err)
-      // clear our timeout
-      clearTimeout(timeout)
-      // set the query method back to its old un-monkey-patched version
-      client.query = query
-    }
-    callback(err, client, release)
   })
 }
 
@@ -135,7 +108,6 @@ module.exports = {
   createNewEntry,
   retrieveShoesData ,
   pgQuery,
-  getClient,
   deleteEntry,
   getUser,
   updateExistingEntry

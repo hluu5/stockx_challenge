@@ -1,0 +1,7 @@
+{"name":"bunyan-log","hostname":"Huy-PC","pid":12084,"level":30,"msg":"Now accepting connection on port 4000","time":"2019-12-05T10:31:45.228Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":12084,"level":30,"msg":"connected to Postgres","time":"2019-12-05T10:31:45.261Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":15084,"level":30,"msg":"Now accepting connection on port 4000","time":"2019-12-05T10:32:40.131Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":15084,"level":30,"msg":"connected to Postgres","time":"2019-12-05T10:32:40.163Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":9052,"level":30,"msg":"Now accepting connection on port 4000","time":"2019-12-05T10:33:29.675Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":9052,"level":30,"msg":"connected to Postgres","time":"2019-12-05T10:33:29.707Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":9052,"level":30,"msg":"executed query { q:\n   'SELECT shoes_id, shoesname, size_data, true_to_size_calculation FROM stockx.shoes WHERE shoesname = ($1)',\n  duration: '59ms',\n  params: [ 'abc' ] }","time":"2019-12-05T10:33:44.332Z","v":0}

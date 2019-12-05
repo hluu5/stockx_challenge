@@ -7,8 +7,12 @@ services:
     environment:
       #configure password and host. Password has to match postgres container env password
       - PASSWORD=postgres
-      #postgres host is the ip of your container or your VM. PLEASE CHANGE THIS.
+      #postgres host is the ip address of your container or your VM. PLEASE CHANGE THIS.
       - POSTGRES_HOST=192.168.99.100
+      #HOST is the ip address of your container or your VM. PLEASE CHANGE THIS.
+      - HOST=192.168.99.100
+      - SERVER_USER=admin
+      - SERVER_PASSWORD=admin
     volumes:
       - .:/etc/src/app
     ports:
