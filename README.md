@@ -97,7 +97,7 @@ go to <docker ip address>:4000/api-docs
 
 docker cp <container-id>:/path/to/file ./local-dir
 
-## Example: copy appLog.log file to host's "tests" folder:
+## Example: copy appLog.log file to host's "logs" folder:
 docker cp 1df7c6bfeb20:app/logs/appLog.log ./logs
 ```
 ### Monitoring:
