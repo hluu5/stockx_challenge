@@ -10,7 +10,7 @@ services:
       #postgres host is the ip address of your container or your VM. PLEASE CHANGE THIS.
       - POSTGRES_HOST=192.168.99.100
       #HOST is the ip address of your container or your VM. PLEASE CHANGE THIS.
-      - HOST=192.168.99.100
+      - HOST=http://192.168.99.100
       - SERVER_USER=admin
       - SERVER_PASSWORD=admin
     volumes:
