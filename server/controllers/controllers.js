@@ -4,7 +4,9 @@ const { log } = require('../utils.js')
 const fs = require('fs');
 const JSONStream = require('JSONStream');
 const bcrypt = require('bcryptjs');
-const axios = require('axios')
+const axios = require('axios');
+const { checkUsername, checkPassword, checkURL } = require('../../validators/validators.js');
+const {check, query, validationResult} = require('express-validator');
 
 module.exports = {
   handleCreateNewEntry: async (req, res) => {
@@ -38,6 +40,11 @@ module.exports = {
   },
 
   checkPasswordMiddleware2: async (req, res, next) => {
+    //validate if username or password is empty
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() })
+    }
     if (req.query.username) {
       const response = await getUser(req.query.username);
       if (response.rows.length === 0) {
@@ -82,6 +89,11 @@ module.exports = {
   },
 
   retrieveParseAndInsertToPostgres: async (req, res) => {
+    //validate if 'url' is correctly provided:
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() })
+    }
     /* IN REAL PRODUCTION, I WOULD ASSUME WE EITHER DOWNLOAD THE LARGE JSON FILES OR MAKE
     HTTP REQUESTS AND THEN PARSE THEM TO COMPUTE AVG SHOES SIZE USING A STREAM LIKE THIS:
     */

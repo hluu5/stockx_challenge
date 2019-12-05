@@ -13,4 +13,7 @@ axios({
   }
 })
 .then(data=>log.info(data.data))
-.catch(err=>log.error(err))
+.catch(err=>{
+  if (err.response) log.error(err.response.data)
+  if (err) log.error(err)
+})

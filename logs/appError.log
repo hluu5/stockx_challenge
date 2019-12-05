@@ -1,3 +1,28 @@
-{"name":"bunyan-log","hostname":"Huy-PC","pid":14360,"level":50,"err":{"message":"getaddrinfo ENOTFOUND 4000 4000:80","name":"Error","stack":"Error: getaddrinfo ENOTFOUND 4000 4000:80\n    at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:56:26)","code":"ENOTFOUND"},"msg":"getaddrinfo ENOTFOUND 4000 4000:80","time":"2019-12-05T10:47:18.404Z","v":0}
-{"name":"bunyan-log","hostname":"Huy-PC","pid":11876,"level":50,"err":{"message":"getaddrinfo ENOTFOUND 4000 4000:80","name":"Error","stack":"Error: getaddrinfo ENOTFOUND 4000 4000:80\n    at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:56:26)","code":"ENOTFOUND"},"msg":"getaddrinfo ENOTFOUND 4000 4000:80","time":"2019-12-05T10:49:25.518Z","v":0}
-{"name":"bunyan-log","hostname":"Huy-PC","pid":5132,"level":50,"err":{"message":"getaddrinfo ENOTFOUND 4000 4000:80","name":"Error","stack":"Error: getaddrinfo ENOTFOUND 4000 4000:80\n    at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:56:26)","code":"ENOTFOUND"},"msg":"getaddrinfo ENOTFOUND 4000 4000:80","time":"2019-12-05T10:51:25.605Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":14352,"level":50,"err":{"message":"Request failed with status code 422","name":"Error","stack":"Error: Request failed with status code 422\n    at createError (C:\\Users\\Huy\\Documents\\Code Interview\\Stockx\\node_modules\\axios\\lib\\core\\createError.js:16:15)\n    at settle (C:\\Users\\Huy\\Documents\\Code Interview\\Stockx\\node_modules\\axios\\lib\\core\\settle.js:17:12)\n    at IncomingMessage.handleStreamEnd (C:\\Users\\Huy\\Documents\\Code Interview\\Stockx\\node_modules\\axios\\lib\\adapters\\http.js:237:11)\n    at IncomingMessage.emit (events.js:194:15)\n    at endReadableNT (_stream_readable.js:1125:12)\n    at process._tickCallback (internal/process/next_tick.js:63:19)"},"msg":"Request failed with status code 422","time":"2019-12-05T20:24:33.679Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":2428,"level":50,"msg":"ERROR: This shoes entry already exists abc","time":"2019-12-05T20:35:07.788Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":2428,"level":50,"msg":"ERROR: This shoes entry already exists efg","time":"2019-12-05T20:35:07.789Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":2428,"level":50,"msg":"ERROR: This shoes entry already exists hij","time":"2019-12-05T20:35:07.790Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":2428,"level":50,"msg":"ERROR: This shoes entry already exists klm","time":"2019-12-05T20:35:07.792Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":2428,"level":50,"msg":"ERROR: This shoes entry already exists nop","time":"2019-12-05T20:35:07.793Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":2428,"level":50,"msg":"ERROR: This shoes entry already exists qrs","time":"2019-12-05T20:35:07.795Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":2428,"level":50,"msg":"ERROR: This shoes entry already exists tuv","time":"2019-12-05T20:35:07.796Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":2428,"level":50,"msg":"ERROR: This shoes entry already exists wx","time":"2019-12-05T20:35:07.798Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":2428,"level":50,"msg":"ERROR: This shoes entry already exists yz","time":"2019-12-05T20:35:07.800Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":2428,"level":50,"msg":"ERROR: This shoes entry already exists abc","time":"2019-12-05T20:35:12.733Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":2428,"level":50,"msg":"ERROR: This shoes entry already exists efg","time":"2019-12-05T20:35:12.735Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":2428,"level":50,"msg":"ERROR: This shoes entry already exists hij","time":"2019-12-05T20:35:12.736Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":2428,"level":50,"msg":"ERROR: This shoes entry already exists klm","time":"2019-12-05T20:35:12.737Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":2428,"level":50,"msg":"ERROR: This shoes entry already exists nop","time":"2019-12-05T20:35:12.738Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":2428,"level":50,"msg":"ERROR: This shoes entry already exists qrs","time":"2019-12-05T20:35:12.739Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":2428,"level":50,"msg":"ERROR: This shoes entry already exists tuv","time":"2019-12-05T20:35:12.740Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":2428,"level":50,"msg":"ERROR: This shoes entry already exists wx","time":"2019-12-05T20:35:12.742Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":2428,"level":50,"msg":"ERROR: This shoes entry already exists yz","time":"2019-12-05T20:35:12.743Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":2428,"level":50,"msg":"ERROR: This shoes entry already exists abc","time":"2019-12-05T20:35:14.709Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":2428,"level":50,"msg":"ERROR: This shoes entry already exists efg","time":"2019-12-05T20:35:14.710Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":2428,"level":50,"msg":"ERROR: This shoes entry already exists hij","time":"2019-12-05T20:35:14.712Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":2428,"level":50,"msg":"ERROR: This shoes entry already exists klm","time":"2019-12-05T20:35:14.713Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":2428,"level":50,"msg":"ERROR: This shoes entry already exists nop","time":"2019-12-05T20:35:14.714Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":2428,"level":50,"msg":"ERROR: This shoes entry already exists qrs","time":"2019-12-05T20:35:14.715Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":2428,"level":50,"msg":"ERROR: This shoes entry already exists tuv","time":"2019-12-05T20:35:14.716Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":2428,"level":50,"msg":"ERROR: This shoes entry already exists wx","time":"2019-12-05T20:35:14.718Z","v":0}
+{"name":"bunyan-log","hostname":"Huy-PC","pid":2428,"level":50,"msg":"ERROR: This shoes entry already exists yz","time":"2019-12-05T20:35:14.719Z","v":0}

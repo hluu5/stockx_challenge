@@ -14,6 +14,8 @@ const {
 } = require('./controllers/controllers.js')
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('../swagger/openapi.json');
+const { checkUsername, checkPassword, checkURL } = require('../validators/validators.js');
+const {check, query, validationResult} = require('express-validator');
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -43,10 +45,10 @@ app.get('/fakeStream', serveFakeStream)
 
 //Simple authentication middleware. In real production, I could use Passport for authentication handler
 //and express-session to persist login session.
-app.get('/readJSONStreamAndStore', checkPasswordMiddleware2)
+app.get('/readJSONStreamAndStore', [checkPassword, checkUsername],checkPasswordMiddleware2)
 
 //API to read from a crowd-sourced stream, process data, then save to db:
-app.get('/readJSONStreamAndStore', retrieveParseAndInsertToPostgres)
+app.get('/readJSONStreamAndStore', [checkURL], retrieveParseAndInsertToPostgres)
 
 //API to manually save to db, authencatiion middleware:
 app.post('/createNewEntry', checkPasswordMiddleware)
