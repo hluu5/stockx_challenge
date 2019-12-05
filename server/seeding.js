@@ -4,10 +4,10 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 axios({
-  url: `http://192.168.99.100:4000/readJSONStreamAndStore`,
+  url: `${process.env.HOST}:4000/readJSONStreamAndStore`,
   method: 'GET',
   params: {
-    url: `http://192.168.99.100:4000/fakeStream`,
+    url: `${process.env.HOST}:4000/fakeStream`,
     username: 'admin',
     password: 'admin'
   }

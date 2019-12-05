@@ -106,6 +106,7 @@ describe('Handling server API', ()=> {
 		.get('/trueToSizeCalculation/')
 		.query({shoesname: 'abc'})
 		await expect(retrieveData.statusCode).toEqual(200)
-		await expect(retrieveData.body[0].true_to_size_calculation).toEqual(3.52027)
+		//round number to 5 decimal places. Different environments will save to PG differently.
+		await expect(Math.round(retrieveData.body[0].true_to_size_calculation * 100000) / 100000).toEqual(3.52027)
 	})
 })

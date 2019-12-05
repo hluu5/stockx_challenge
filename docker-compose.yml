@@ -8,8 +8,10 @@ services:
       #configure password and host. Password has to match postgres container env password
       - PASSWORD=postgres
       #postgres host is the ip address of your container or your VM. PLEASE CHANGE THIS.
+      #DO NOT PREPEND 'http://' before you ip address
       - POSTGRES_HOST=192.168.99.100
       #HOST is the ip address of your container or your VM. PLEASE CHANGE THIS.
+      #MAKE SURE TO PREPEND 'http://' before you ip address
       - HOST=http://192.168.99.100
       - SERVER_USER=admin
       - SERVER_PASSWORD=admin

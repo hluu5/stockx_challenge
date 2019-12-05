@@ -7,7 +7,7 @@ const pool = new Pool({
   //your username for postgres here
   user: 'postgres',
   //host should be ip address of your postgres container, your cloud postgres db or your local postgres db
-  host: '192.168.99.100',
+  host: process.env.POSTGRES_HOST,
   //Connect to PORT that is dedicated to your postgres db. Default is 5432.
   port: 5432,
   //created by running 'npm run createdb'
