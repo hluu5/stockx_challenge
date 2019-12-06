@@ -104,9 +104,7 @@ For making sure the environment of the app is consistent when shipped out, it is
 - Comments are provided as needed for clarification. I tried to balance out between not having too much comments and enough for other engineers can pick up and maintain the project.
 
 ### Validation: express-validator:
-I use expess-validator to check types and required fields of all the queries that are needed to send to an API.
-
-Postgres Schema also benefits from this since columns type are predefined, too.
+I use expess-validator to check types and required fields of all the queries that are needed to send to an API. Postgres Schema also benefits from this since columns type are predefined, too.
 
 ### Testing: Jest + Supertest:
 I assume data that are being retrieved from a crowd-sourced API are big in size, therefore I used stream and pipe to read and write data. A total of 6 tests both unit and integration tests are shipped with the app. Testing includes:
@@ -134,4 +132,13 @@ New Relic also has Alert feature that will alert you if your app falls below cer
 Apps and Postgres are also being kept alive always with Docker's restart policy.
 If we don't use Docker to manage our app, we can use PM2 to keep our app alive and restart automatically.
 
+### Other Tasks That Are Not In Scope Of This Project But Real Production App Should Have:
+#### Performance:
+- Redis can be used to cache incoming request and its reponse.
+- Scalling: with Docker, the app can be vertically scale with more instances of the app and db.
+- Load-balancing: pm2 has its own internal load balancer for utilizing all cores of a single host machine. Nginx can be used to load-balance incoming request. Kubenertes also works well with Docker.
 
+#### Security:
+- Basic XSS prevention can be done by Helmet nodejs
+- Authentication process can be better implemented with Passport and express-session to persists logged-in session.
+- Basic DDOS prevention can be done by using a rate-limiter module.
