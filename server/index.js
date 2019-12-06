@@ -12,9 +12,14 @@ const {
   checkPasswordMiddleware,
   checkPasswordMiddleware2
 } = require('./controllers/controllers.js')
+
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('../swagger/openapi.json');
-const { checkUsername, checkPassword, checkURL } = require('../validators/validators.js');
+const {
+  checkUsername, checkPassword, checkURL,
+  checkBodyForPassword, checkBodyForShoesName,
+  checkBodyForShoesSize, checkBodyForTrueToSizeCal, checkBodyForUsername
+} = require('../validators/validators.js');
 const {check, query, validationResult} = require('express-validator');
 const dotenv = require('dotenv');
 dotenv.config();
@@ -51,10 +56,12 @@ app.get('/readJSONStreamAndStore', [checkPassword, checkUsername],checkPasswordM
 app.get('/readJSONStreamAndStore', [checkURL], retrieveParseAndInsertToPostgres)
 
 //API to manually save to db, authencatiion middleware:
-app.post('/createNewEntry', checkPasswordMiddleware)
+app.post('/createNewEntry',[checkBodyForUsername, checkBodyForPassword], checkPasswordMiddleware)
 
-//API to manually save to db, authencatiion middleware:
-app.post('/createNewEntry', handleCreateNewEntry)
+//API to manually save to db, validate input middleware:
+app.post('/createNewEntry', [
+  checkBodyForShoesName, checkBodyForShoesSize, checkBodyForTrueToSizeCal
+], handleCreateNewEntry)
 
 module.exports = app.listen(PORT, ()=> {
   log.info(`Now accepting connection on port ${PORT}`)

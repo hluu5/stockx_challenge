@@ -5,12 +5,15 @@ const fs = require('fs');
 const JSONStream = require('JSONStream');
 const bcrypt = require('bcryptjs');
 const axios = require('axios');
-const { checkUsername, checkPassword, checkURL } = require('../../validators/validators.js');
 const {check, query, validationResult} = require('express-validator');
+
 
 module.exports = {
   handleCreateNewEntry: async (req, res) => {
-    console.log(req.body)
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() })
+    }
     if (req.body) {
       const response = await createNewEntry(req.body.shoesName, req.body.shoesSize, req.body.trueToSizeCalculation)
       console.log(response)
@@ -23,6 +26,10 @@ module.exports = {
   },
 
   checkPasswordMiddleware: async (req, res, next) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() })
+    }
     if (req.body.username) {
       const response = await getUser(req.body.username);
       if (response.rows.length === 0) {
