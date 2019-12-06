@@ -138,7 +138,7 @@ If we don't use Docker to manage our app, we can use PM2 to keep our app alive a
 ### Other Tasks That Are Not In Scope Of This Project But Real Production App Should Have:
 #### Performance:
 - Redis can be used to cache incoming request and its reponse.
-- Scalling: with Docker, the app can be vertically scale with more instances of the app and db.
+- Scalling: with Docker, the app can be horizontally scaled with more instances of the app and db.
 - Load-balancing: pm2 has its own internal load balancer for utilizing all cores of a single host machine. Nginx can be used to load-balance incoming request. Kubenertes also works well with Docker.
 
 #### Security:
