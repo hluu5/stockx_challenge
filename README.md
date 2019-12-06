@@ -130,7 +130,7 @@ docker cp 1df7c6bfeb20:app/logs/appLog.log ./logs
 ### Monitoring:
 I'm using New Relic APM to monitor my app. Its key metrics are being exported to New Relic APM cloud and can be accessed from there.
 
-New Relic also has Alert feature that will alert you if your app falls below certain thresholds. For example, it set my app to have error rate of above 2%. It will automatically notify me through email or slack.
+New Relic also has Alert feature that will alert you if your app falls below certain thresholds. For example, I set my app to have error rate of above 2%. It will automatically notify me through email or slack.
 
 Apps and Postgres are also being kept alive always with Docker's restart policy.
 If we don't use Docker to manage our app, we can use PM2 to keep our app alive and restart automatically.
