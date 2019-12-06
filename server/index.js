@@ -22,21 +22,21 @@ const {
 } = require('../validators/validators.js');
 const dotenv = require('dotenv');
 dotenv.config();
-const helmet = require('helmet');
+// const helmet = require('helmet');
 
 //provide basic security for app by setting HTTP headers:
-app.use(helmet({
-  contentSecurityPolicy: {
-    directives: {
-      defaultSrc: ["'self'"],
-      styleSrc: ["'self'"],
-      scriptSrc: ["'self'"],
-      objectSrc: ["'self'"],
-      upgradeInsecureRequests: true
-    }
-  },
-  referrerPolicy: { policy: 'same-origin'},
-}));
+// app.use(helmet({
+//   contentSecurityPolicy: {
+//     directives: {
+//       defaultSrc: ["'self'"],
+//       styleSrc: ["'self'"],
+//       scriptSrc: ["'self'"],
+//       objectSrc: ["'self'"],
+//       upgradeInsecureRequests: true
+//     }
+//   },
+//   referrerPolicy: { policy: 'same-origin'},
+// }));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
