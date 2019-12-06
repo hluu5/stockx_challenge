@@ -24,6 +24,7 @@
     "express": "^4.17.1",
     "express-validator": "^6.3.0",
     "fs": "0.0.1-security",
+    "helmet": "^3.21.2",
     "newrelic": "^6.2.0",
     "nodemon": "^2.0.1",
     "pg": "^7.14.0",
