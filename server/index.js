@@ -20,12 +20,26 @@ const {
   checkBodyForPassword, checkBodyForShoesName,
   checkBodyForShoesSize, checkBodyForTrueToSizeCal, checkBodyForUsername
 } = require('../validators/validators.js');
-const {check, query, validationResult} = require('express-validator');
 const dotenv = require('dotenv');
 dotenv.config();
+const helmet = require('helmet');
 
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
+//provide basic security for app by setting HTTP headers:
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      styleSrc: ["'self'"],
+      scriptSrc: ["'self'"],
+      objectSrc: ["'self'"],
+      upgradeInsecureRequests: true
+    }
+  },
+  referrerPolicy: { policy: 'same-origin'},
+}));
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 //import PORT variable from .env file. This file is supposed to be ignored from github commit in real production
 //and instruction to set up .env file will be given to team members
@@ -58,7 +72,7 @@ app.get('/readJSONStreamAndStore', [checkURL], retrieveParseAndInsertToPostgres)
 //API to manually save to db, authencatiion middleware:
 app.post('/createNewEntry',[checkBodyForUsername, checkBodyForPassword], checkPasswordMiddleware)
 
-//API to manually save to db, validate input middleware:
+//API to manually save to db, with validate input middleware:
 app.post('/createNewEntry', [
   checkBodyForShoesName, checkBodyForShoesSize, checkBodyForTrueToSizeCal
 ], handleCreateNewEntry)

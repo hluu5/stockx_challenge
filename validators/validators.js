@@ -1,4 +1,4 @@
-const { check, query, body, oneOf } = require('express-validator');
+const { query, body, oneOf } = require('express-validator');
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -22,6 +22,4 @@ module.exports = {
                              .not().isEmpty().withMessage('must provide AvgTrueToSizeCal')
                              .isNumeric().withMessage('AvgTrueToSizeCal must be a number'),
 
-
-  // checkShoesname: [check('password').not().isEmpty().withMessage('must provide password')]
 }

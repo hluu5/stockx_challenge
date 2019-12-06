@@ -6,7 +6,7 @@ module.exports = {
     streams: [
       {
         level: 'debug',
-        path: './logs/appLog.log' // log INFO and above to stdout
+        path: './logs/appLog.log' // log INFO and above to a file
       },
       {
         level: 'error',

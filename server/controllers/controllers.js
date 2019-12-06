@@ -5,8 +5,7 @@ const fs = require('fs');
 const JSONStream = require('JSONStream');
 const bcrypt = require('bcryptjs');
 const axios = require('axios');
-const {check, query, validationResult} = require('express-validator');
-
+const { validationResult } = require('express-validator');
 
 module.exports = {
   handleCreateNewEntry: async (req, res) => {
@@ -16,7 +15,6 @@ module.exports = {
     }
     if (req.body) {
       const response = await createNewEntry(req.body.shoesName, req.body.shoesSize, req.body.trueToSizeCalculation)
-      console.log(response)
       if (response.length === 1) {
         await res.send(response)
       } else {
@@ -96,7 +94,7 @@ module.exports = {
   },
 
   retrieveParseAndInsertToPostgres: async (req, res) => {
-    //validate if 'url' is correctly provided:
+    //validate if query 'url' is correctly provided:
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() })
