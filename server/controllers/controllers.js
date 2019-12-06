@@ -18,7 +18,8 @@ module.exports = {
       if (response.length === 1) {
         await res.send(response)
       } else {
-        await res.status(400).end(response)
+        res.statusMessage = await response;
+        await res.status(400).end(response);
       }
     }
   },
@@ -31,6 +32,7 @@ module.exports = {
     if (req.body.username) {
       const response = await getUser(req.body.username);
       if (response.rows.length === 0) {
+        res.statusMessage = "User doesn't exist";
         await res.status(401).end("User doesn't exist");
       } else {
         const hash = await bcrypt.compare(req.body.password, response.rows[0].password)
@@ -38,7 +40,8 @@ module.exports = {
           await next()
         }
         if (hash === false) {
-          await res.status(401).end('Wrong Password')
+          res.statusMessage = 'Wrong Password';
+          await res.status(401).end('Wrong Password');
         }
       }
     }
@@ -53,6 +56,7 @@ module.exports = {
     if (req.query.username) {
       const response = await getUser(req.query.username);
       if (response.rows.length === 0) {
+        res.statusMessage = "User doesn't exist";
         await res.status(401).end("User doesn't exist");
       } else {
         const hash = await bcrypt.compare(req.query.password, response.rows[0].password)
@@ -60,7 +64,8 @@ module.exports = {
           await next()
         }
         if (hash === false) {
-          await res.status(401).end('Wrong Password')
+          res.statusMessage = 'Wrong Password';
+          await res.status(401).end('Wrong Password');
         }
       }
     }
@@ -70,7 +75,10 @@ module.exports = {
     if (req.query) {
       retrieveShoesData(req.query.shoesname, data => {
         if (data.length > 0) res.send(data);
-        else res.status(404).end("shoes entry doesn't exist")
+        else {
+          res.statusMessage = "shoes entry doesn't exist";
+          res.status(404).end("shoes entry doesn't exist");
+        }
       })
     }
   },
@@ -79,7 +87,10 @@ module.exports = {
     if (req.params.shoesname) {
       retrieveShoesData(req.params.shoesname, data => {
         if (data.length > 0) res.send(data);
-        else res.status(404).end("shoes entry doesn't exist")
+        else {
+          res.statusMessage = "shoes entry doesn't exist";
+          res.status(404).end("shoes entry doesn't exist");
+        }
       })
     }
   },
@@ -127,6 +138,7 @@ module.exports = {
 
         JSONparser.on('error', (err) => {
           log.error('ERROR READING STREAM', err);
+          res.statusMessage = 'FAILED CREATING NEW DATA IN SERVER';
           res.status(500).end('FAILED CREATING NEW DATA IN SERVER');
         })
       })
