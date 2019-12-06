@@ -104,7 +104,7 @@ For making sure the environment of the app is consistent when shipped out, it is
 ### API Documentation and Maintainability: Swagger, Comments, README.MD
 - This comprehensive README file is designed to guide you to most aspects of the app. But Swagger is built on top of this app for ease of navigating. It uses a schema in the "openapi.json" file.
 
-- Comments are provided as needed for clarification. I tried to balance out between not having too much comments and enough for other engineers can pick up and maintain the project.
+- Comments are provided as needed for clarification. I tried to balance out between not having too much comments and enough for other engineers to pick up and maintain the project.
 
 ### Validation: express-validator:
 I use expess-validator to check types and required fields of all the queries that are needed to send to an API. Postgres Schema also benefits from this since columns type are predefined, too.
