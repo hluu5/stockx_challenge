@@ -8,7 +8,7 @@ Please pull down from github. If you wish to run this app locally without using 
 - postgresdb installed on your machine.
 - create a role for PostgresDB with a username 'postgres', with password: 'postgres"
 - create a db named 'stockx',
-- if you're using docker, please go to file 'swagger/openai.json', on line 80, please change "http://localhost:4000/fakeStream" to "<your Docker Ip address>:4000/fakeStream".
+- if you're using docker, please go to file 'swagger/openai.json', on line 80, please change "http://localhost:4000/fakeStream" to "{your Docker Ip address}:4000/fakeStream".
 
 Schema and table are created automatically using 'npm run createdb' script (will be done later in the process). Initial admin user data is also created with this script.
 
@@ -76,7 +76,7 @@ go to <docker ip address>:4000/api-docs
 ### Format:
 #### There are two ways to retrieve data from server API:
 1. Passing params in url:
-  format: http://<your VM or localhost ip address>:4000/trueToSizeCalculation/:shoesname
+  format: http://{your VM or localhost ip address}:4000/trueToSizeCalculation/:shoesname
 ```
   http://192.168.99.100:4000/trueToSizeCalculation/shoses3wqsad4r
 ```
