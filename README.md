@@ -76,7 +76,7 @@ go to <docker ip address>:4000/api-docs
 ### Format:
 #### There are two ways to retrieve data from server API:
 1. Passing params in url:
-  format: http://{your VM or localhost ip address}:4000/trueToSizeCalculation/:shoesname
+Format: http://{your VM or localhost ip address}:4000/trueToSizeCalculation/:shoesname
 ```
   http://192.168.99.100:4000/trueToSizeCalculation/shoses3wqsad4r
 ```
