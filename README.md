@@ -99,7 +99,7 @@ Format: http://{your VM or localhost ip address}:4000/trueToSizeCalculation/:sho
 The app is prodivded with a .env file to act as center of control for all environment variables. For Docker users, env variables are controlled by passing env variables in the docker-compose.yml file or by providing env variables at run time scripts.
 
 ### Enviroment Behavior Control: Docker
-For making sure the environment of the app is consistent when shipped out, it is provided with Dockerfile and docker-compose.yml files for building docker images. Docker Compose is the preferred way to have the app up and running since it combines all services (PostgresDB and the App itself) to one place.
+For making sure the environment of the app is consistent when shipped out, it is provided with Dockerfile and docker-compose.yml files for building docker images. Docker Compose is the preferred way to have the app up and running since it combines all services (PostgresDB and the App itself) in one place.
 
 ### API Documentation and Maintainability: Swagger, Comments, README.MD
 - This comprehensive README file is designed to guide you to most aspects of the app. But Swagger is built on top of this app for ease of navigating. It uses a schema in the "openapi.json" file.
