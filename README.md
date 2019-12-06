@@ -110,7 +110,7 @@ For making sure the environment of the app is consistent when shipped out, it is
 I use expess-validator to check types and required fields of all the queries that are needed to send to an API. Postgres Schema also benefits from this since columns type are predefined, too.
 
 ### Testing: Jest + Supertest:
-I assume data that are being retrieved from a crowd-sourced API are big in size, therefore I used stream and pipe to read and write data. A total of 6 tests both unit and integration tests are shipped with the app. Testing includes:
+I assume data that are being retrieved from a crowd-sourced API are big in size, therefore I used stream and pipe to read and write data. A total of 6 tests, both unit and integration tests, are shipped with the app. Testing includes:
 - check authentication: only admin user can insert data into db.
 - check availability of data. Return data that are properly inserted.
 - no duplication is allowed in db.
