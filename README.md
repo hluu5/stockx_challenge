@@ -1,5 +1,8 @@
 ## STOCKX CODING CHALLENGE
 
+### FOREWORD:
+The challenge was to create an app that would retrieve data from a crowd-sourced API, calculate the Avg True To Size and save data to db. It also has to be able to serve up data.
+
 ### Instruction:
 Please pull down from github. If you wish to run this app locally without using Docker, please make sure you finished the following before you go to next step:
 - postgresdb installed on your machine.
